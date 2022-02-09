@@ -57,13 +57,43 @@ class _HomeState extends State<Home> {
             context,
             MaterialPageRoute(
               builder: (context) => const AddNewCart(),
-            )),
+            )).then((value) => readAllCar()),
       ),
       appBar: AppBar(),
       body: load
           ? const ShowProgress()
           : haveData!
-              ? Text('Have Data')
+              ? ListView.builder(
+                  itemCount: infoCarModels!.length,
+                  itemBuilder: (context, index) => Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ShowText(
+                            label: infoCarModels![index].idRegister,
+                            textStyle: MyConstant().h1Style(),
+                          ),
+                          ShowText(
+                            label: infoCarModels![index].province,
+                            textStyle: MyConstant().h2Style(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ShowText(label: 'ยี่ห้อ = ${infoCarModels![index].car}'),
+                                 ShowText(label: 'สี = ${infoCarModels![index].color}'),
+                                  ShowText(label: 'รุ่น = ${infoCarModels![index].model}'),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
               : Center(
                   child: ShowText(
                     label: 'No Car',
