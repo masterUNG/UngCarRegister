@@ -98,4 +98,14 @@ class SQLiteHelper {
     }
     return serviceCarModels;
   }
+
+  Future<void> deleteRecordInfoCar(int id) async {
+    Database database = await connectedDatabase();
+    await database.delete(tableInfo, where: '$columnid = $id');
+  }
+
+  Future<void> editInfoCar(InfoCarModel infoCarModel) async {
+    Database database = await connectedDatabase();
+    await database.update(tableInfo, infoCarModel.toMap(), where: '$columnid = ${infoCarModel.id}');
+  }
 }
